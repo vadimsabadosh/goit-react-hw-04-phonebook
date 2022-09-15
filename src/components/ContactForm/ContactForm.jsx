@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 
-export default function ContactForm({ onAddContact }) {
+export default function ContactForm({ onAddContact, contacts }) {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
@@ -14,9 +14,14 @@ export default function ContactForm({ onAddContact }) {
   }
 
   function addContact() {
-    onAddContact(name, number);
-    setNumber('');
-    setName('');
+    const isExists = contacts.find(item => item.name === name);
+    if (!isExists) {
+      onAddContact(name, number);
+      setNumber('');
+      setName('');
+    } else {
+      alert(`${name} is already in contacts`);
+    }
   }
   return (
     <div>
@@ -53,4 +58,11 @@ export default function ContactForm({ onAddContact }) {
 }
 ContactForm.propTypes = {
   onAddContact: PropTypes.func.isRequired,
+  contacts: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      number: PropTypes.string.isRequired,
+      id: PropTypes.string.isRequired,
+    })
+  ),
 };

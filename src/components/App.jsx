@@ -35,13 +35,18 @@ export default function App() {
       alert(`${name} is already in contacts`);
     }
   }
+
+  function filterContacts() {
+    return contacts.filter(item => item.name.toLowerCase().includes(filter));
+  }
+
   return (
     <div>
       <h1>Phonebook</h1>
-      <ContactForm onAddContact={onAddContact} />
+      <ContactForm onAddContact={onAddContact} contacts={contacts} />
       <h2>Contacts</h2>
       <Filter value={filter} onChange={onFilterInput} />
-      <ContactList contacts={contacts} filter={filter} deleteItem={onDelete} />
+      <ContactList contacts={filterContacts()} deleteItem={onDelete} />
     </div>
   );
 }
