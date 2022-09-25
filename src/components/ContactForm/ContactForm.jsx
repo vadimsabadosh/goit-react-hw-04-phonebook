@@ -13,18 +13,21 @@ export default function ContactForm({ onAddContact, contacts }) {
     setNumber(e.target.value);
   }
 
-  function addContact() {
-    const isExists = contacts.find(item => item.name === name);
-    if (!isExists) {
-      onAddContact(name, number);
-      setNumber('');
-      setName('');
-    } else {
-      alert(`${name} is already in contacts`);
+  function addContact(e) {
+    e.preventDefault();
+    if (name && number) {
+      const isExists = contacts.find(item => item.name === name);
+      if (!isExists) {
+        onAddContact(name, number);
+        setNumber('');
+        setName('');
+      } else {
+        alert(`${name} is already in contacts`);
+      }
     }
   }
   return (
-    <div>
+    <form onSubmit={addContact}>
       <div>
         <label htmlFor="name">Name</label>
         <input
@@ -52,8 +55,8 @@ export default function ContactForm({ onAddContact, contacts }) {
           onChange={e => onChangeNumber(e)}
         />
       </div>
-      <button onClick={addContact}>Add contact</button>
-    </div>
+      <button type="submit">Add contact</button>
+    </form>
   );
 }
 ContactForm.propTypes = {

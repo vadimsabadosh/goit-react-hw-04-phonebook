@@ -23,17 +23,12 @@ export default function App() {
   }
 
   function onAddContact(name, number) {
-    const isExists = contacts.find(item => item.name.includes(name));
-    if (!isExists) {
-      const newContact = {
-        name,
-        id: uuidv4(),
-        number,
-      };
-      setContacts(prevState => [...prevState, newContact]);
-    } else {
-      alert(`${name} is already in contacts`);
-    }
+    const newContact = {
+      name,
+      id: uuidv4(),
+      number,
+    };
+    setContacts(prevState => [...prevState, newContact]);
   }
 
   function filterContacts() {
